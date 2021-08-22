@@ -32,9 +32,9 @@ public class Board {
         return index / 9;
     }
 
-    public static void showBoard(Board board) {
+    public void showBoard() {
         for(int index = 0; index < 81; index++) {
-            System.out.print(board.getValue(index) + "  ");
+            System.out.print(board[index] + "  ");
             if(index % 9 == 8) System.out.print("\n");
         }
         System.out.print("\n");
