@@ -42,8 +42,6 @@ public class Board {
 
     public boolean checkPlacement(int index) {
         if(board != null) {
-            int row = index - (index % 9);
-            int column = index % 9;
             int ox = index % 9;
             int oy = index / 9;
             int current = getValue(index);
@@ -51,7 +49,7 @@ public class Board {
             //Row
             for(int x = 0; x < 9; x++) {
                 //System.out.println("Checking Row: " + getValue(row + x) + " at " + (row + x) + "\n");
-                if(row + x != index && getValue(row + x) == current) {
+                if(x != ox && getValue(x, oy) == current) {
                     return false;
                 }
             }
@@ -59,7 +57,7 @@ public class Board {
             //Column
             for(int y = 1; y < 9; y++) {
                 //System.out.println("Checking Column: " + getValue(column + (9 * y)) + " at " + (column + (9 * y)) + "\n");
-                if(column + (9 * y) != index && getValue(column + (9 * y)) == current) {
+                if(y != oy && getValue(ox, y) == current) {
                     return false;
                 }
             }
