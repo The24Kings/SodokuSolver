@@ -41,43 +41,40 @@ public class Board {
     }
 
     public boolean checkPlacement(int index) {
-        if(board != null) {
-            int ox = index % 9;
-            int oy = index / 9;
-            int current = getValue(index);
+        int ox = index % 9;
+        int oy = index / 9;
+        int current = getValue(index);
 
-            //Row
-            for(int x = 0; x < 9; x++) {
-                //System.out.println("Checking Row: " + getValue(row + x) + " at " + (row + x) + "\n");
-                if(x != ox && getValue(x, oy) == current) {
-                    return false;
-                }
+        //Row
+        for(int x = 0; x < 9; x++) {
+            //System.out.println("Checking Row: " + getValue(row + x) + " at " + (row + x) + "\n");
+            if(x != ox && getValue(x, oy) == current) {
+                return false;
             }
+        }
 
-            //Column
-            for(int y = 1; y < 9; y++) {
-                //System.out.println("Checking Column: " + getValue(column + (9 * y)) + " at " + (column + (9 * y)) + "\n");
-                if(y != oy && getValue(ox, y) == current) {
-                    return false;
-                }
+        //Column
+        for(int y = 1; y < 9; y++) {
+            //System.out.println("Checking Column: " + getValue(column + (9 * y)) + " at " + (column + (9 * y)) + "\n");
+            if(y != oy && getValue(ox, y) == current) {
+                return false;
             }
+        }
 
-            //Square
-            int topX = ox - (ox % 3);
-            int topY = oy - (oy % 3);
+        //Square
+        int topX = ox - (ox % 3);
+        int topY = oy - (oy % 3);
 
-            for(int y = 0; y < 3; y++) {
-                for (int x = 0; x < 3; x++) {
-                    //System.out.println("Checking Square: " + getValue(topX + x, topY + y) + " at (" + (topX + x) + ", " + (topY + y) + ")\n");
-                    if((topX + x != ox) && (topY + y != oy)) {
-                        if(getValue(topX + x, topY + y) == current) {
-                            return false;
-                        }
+        for(int y = 0; y < 3; y++) {
+            for (int x = 0; x < 3; x++) {
+                //System.out.println("Checking Square: " + getValue(topX + x, topY + y) + " at (" + (topX + x) + ", " + (topY + y) + ")\n");
+                if((topX + x != ox) && (topY + y != oy)) {
+                    if(getValue(topX + x, topY + y) == current) {
+                        return false;
                     }
                 }
             }
-            return true;
         }
-        return false;
+        return true;
     }
 }

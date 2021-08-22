@@ -1,3 +1,6 @@
+import java.time.Duration;
+import java.time.Instant;
+
 public class main {
     public static void main(String[] args) {
         Board board = new Board(new int[] {
@@ -12,11 +15,15 @@ public class main {
             0,0,0,5,6,8,0,0,2
         });
 
+        Instant start = Instant.now();
+
         Solver.solve(board);
 
-        for(int index = 0; index < 81; index++) {
-            System.out.print(board.getValue(index) + "  ");
-            if(index % 9 == 8) System.out.print("\n");
-        }
+        Instant finish = Instant.now();
+
+        double timeElapsed = Duration.between(start, finish).toNanos();
+
+        board.showBoard();
+        System.out.println("Solution took: " + (timeElapsed / 1000000000) + "s");
     }
 }
