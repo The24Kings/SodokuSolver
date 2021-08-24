@@ -105,7 +105,7 @@ public class Board implements Cloneable {
         return true;
     }
 
-    public boolean fillGrid() {
+    public boolean createPuzzle() {
         int index = 0;
         for (int i = 0; i < 81; i++) {
             index = i;
@@ -118,7 +118,7 @@ public class Board implements Cloneable {
                         if (checkGrid()) {
                             return true;
                         } else {
-                            if(fillGrid()) {
+                            if(createPuzzle()) {
                                 return true;
                             }
                         }
@@ -135,7 +135,6 @@ public class Board implements Cloneable {
         int randomPlacement;
         int temp;
         int currentAttempts;
-
         Board puzzle = new Board(new int[] {
                 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -147,7 +146,8 @@ public class Board implements Cloneable {
                 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0,
         });
-        puzzle.fillGrid();
+
+        puzzle.createPuzzle();
 
         while(true) {
             randomPlacement = (int) (Math.random() * 81);
