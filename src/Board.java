@@ -34,12 +34,12 @@ public class Board implements Cloneable {
         return board[getIndex(x, y)];
     }
 
-    public void setValue(int index, int value) {
-        board[index] = value;
-    }
-
     public int getValue(int index) {
         return board[index];
+    }
+
+    public void setValue(int index, int value) {
+        board[index] = value;
     }
 
     public int getX(int index) {
@@ -61,7 +61,12 @@ public class Board implements Cloneable {
 
     public void showBoard() {
         for(int index = 0; index < 81; index++) {
-            System.out.print(board[index] + "  ");
+            if(index % 27 == 0 && index != 0) {
+                System.out.print("-  -  - | -  -  - | -  -  -\n");
+            }
+            if(index % 3 == 2 && index % 9 != 8) {
+                System.out.print(board[index] + " | ");
+            } else System.out.print(board[index] + "  ");
             if(index % 9 == 8) System.out.print("\n");
         }
         System.out.print("\n");
