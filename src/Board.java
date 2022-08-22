@@ -3,57 +3,35 @@ import java.time.Instant;
 import java.util.*;
 
 public class Board implements Cloneable {
-    private int[] board;
+    private int[][] board;
     ArrayList<Integer> numberList = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
 
-    public Board(int[] sudoku) {
+    public Board(int[][] sudoku) {
         this.board = sudoku;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        Board cloned = (Board)super.clone();
-        cloned.setBoard(cloned.getBoard().clone());
-
-        return cloned;
-    }
-
-    public int[] getBoard() {
+    public int[][] getBoard() {
         return this.board;
     }
 
-    public void setBoard(int[] board) {
+    public void setBoard(int[][] board) {
         this.board = board;
     }
 
-    public int getIndex(int x, int y) {
-        return (y * 9) + x;
-    }
-
     public int getValue(int x, int y) {
-        return board[getIndex(x, y)];
+        return board[x][y];
     }
 
-    public int getValue(int index) {
-        return board[index];
-    }
-
-    public void setValue(int index, int value) {
-        board[index] = value;
-    }
-
-    public int getX(int index) {
-        return index % 9;
-    }
-
-    public int getY(int index) {
-        return index / 9;
+    public void setValue(int x, int y, int value) {
+        board[x][y] = value;
     }
 
     public boolean checkGrid() {
-        for(int i = 0; i < 81; i++) {
-            if(getValue(i) == 0) {
-                return false;
+        for(int x = 0; x < 9; x++) {
+            for(int y = 0; y < 9; y++) {
+                if (getValue(x,y) == 0) {
+                    return false;
+                }
             }
         }
         return true;
@@ -72,13 +50,13 @@ public class Board implements Cloneable {
         System.out.print("\n");
     }
 
-    public boolean checkPlacement(int index) {
-        int ox = index % 9;
-        int oy = index / 9;
-        int current = getValue(index);
+    public boolean checkPlacement(int x, int y) {
+        int ox = x;
+        int oy = y;
+        int current = getValue(x, y);
 
         //Row
-        for(int x = 0; x < 9; x++) {
+        /*for(int x = 0; x < 9; x++) {
             //System.out.println("Checking Row: " + getValue(x, oy) + " at " + getIndex(x, oy) + "\n");
             if(x != ox && getValue(x, oy) == current) {
                 return false;
@@ -108,31 +86,31 @@ public class Board implements Cloneable {
             }
         }
         return true;
-    }
+    }*/
 
     public boolean createPuzzle() {
-        int index = 0;
-        for (int i = 0; i < 81; i++) {
-            index = i;
-            if (getValue(i) == 0) {
-                Collections.shuffle(numberList);
+        for (int _x = 0; _x < 9; _x++) {
+            for (int _y = 0; _y < 9; _y++) {
+                if (getValue(_x, _y) == 0) {
+                    Collections.shuffle(numberList);
 
-                for (int number : numberList) {
-                    setValue(i, number);
-                    if (checkPlacement(i)) {
-                        if (checkGrid()) {
-                            return true;
-                        } else {
-                            if(createPuzzle()) {
+                    for (int number : numberList) {
+                        setValue(_x, _y, number);
+                        if (checkPlacement(_x, _y)) {
+                            if (checkGrid()) {
                                 return true;
+                            } else {
+                                if (createPuzzle()) {
+                                    return true;
+                                }
                             }
                         }
                     }
+                    break;
                 }
-                break;
             }
         }
-        setValue(index, 0);
+        setValue(x, y, 0);
         return false;
     }
 
@@ -140,17 +118,7 @@ public class Board implements Cloneable {
         int randomPlacement;
         int temp;
         int currentAttempts;
-        Board puzzle = new Board(new int[] {
-                0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 0,
-        });
+        Board puzzle = new Board(new int[][] {});
 
         puzzle.createPuzzle();
 
@@ -173,18 +141,10 @@ public class Board implements Cloneable {
         }
         return puzzle;
     }
-
+/*
     public static void example() {
-        Board board = new Board(new int[] {
-                0,0,6,1,8,4,5,9,0,
-                5,9,0,6,0,2,8,0,4,
-                4,8,0,9,5,7,2,0,1,
-                0,0,0,0,1,0,0,8,6,
-                1,0,2,8,9,0,4,5,7,
-                0,3,0,0,0,6,0,0,0,
-                0,2,0,7,0,9,0,1,0,
-                6,0,0,0,0,0,9,4,0,
-                0,0,0,5,6,8,0,0,2
+        Board board = new Board(new int[][] {
+
         });
 
         Instant start = Instant.now();
@@ -197,5 +157,5 @@ public class Board implements Cloneable {
 
         board.showBoard();
         System.out.println("Solution took: " + (timeElapsed / 1000000000) + "s");
-    }
+    }*/
 }
